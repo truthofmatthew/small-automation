@@ -19,14 +19,19 @@ async function processButtons() {
         await delay(1000); // Adjust this delay based on how quickly your modal appears
         
         // Attempt to click the "Withdraw" button within the modal
-        let withdrawButton = document.querySelector('.artdeco-modal__actionbar').children[1];
-        if (withdrawButton) {
-            simulateClick(withdrawButton);
+        let modalActionbar = document.querySelector('.artdeco-modal__actionbar');
+        if (modalActionbar) {
+            let withdrawButton = modalActionbar.children[1];
+            if (withdrawButton) {
+                simulateClick(withdrawButton);
+            } else {
+                console.log('Withdraw button not found. Waiting and trying again...');
+                await delay(500); // Extra wait time if the button was not initially found
+                withdrawButton = modalActionbar.children[1];
+                if (withdrawButton) simulateClick(withdrawButton);
+            }
         } else {
-            console.log('Withdraw button not found. Waiting and trying again...');
-            await delay(500); // Extra wait time if the button was not initially found
-            withdrawButton = document.querySelector('.artdeco-modal__actionbar').children[1];
-            if (withdrawButton) simulateClick(withdrawButton);
+            console.log('Modal action bar not found.');
         }
 
         // Wait a moment before proceeding to the next button
