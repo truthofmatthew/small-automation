@@ -7,7 +7,7 @@ for (let i = 0; i < 100; i++) {
 
             setTimeout(() => {
                 document.evaluate("//img[contains(@src,'https://web-cdn.snapp.ir/club/close.svg')]", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click();
-            }, 2000);
-        }, 2000);
-    }, i * 6000); // Each iteration starts every 6 seconds (3 actions * 2 seconds each)
+            }, 3000);
+        }, 3000);
+    }, i * 9000); // Each iteration starts every 6 seconds (3 actions * 2 seconds each)
 }
