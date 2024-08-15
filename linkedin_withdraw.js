@@ -10,28 +10,29 @@ function delay(duration) {
 }
 
 async function processButtons() {
-    const buttons = Array.from(document.querySelectorAll('.invitation-card__action-btn'));
+    const buttons = Array.from(document.querySelectorAll('.entity-result__actions .artdeco-button'));
     for (let button of buttons) {
-        // Click the first button (invitation)
+        // Click the button (e.g., Following button)
         simulateClick(button);
         
         // Wait for the modal to likely appear
         await delay(1000); // Adjust this delay based on how quickly your modal appears
         
-        // Attempt to click the "Withdraw" button within the modal
-        let modalActionbar = document.querySelector('.artdeco-modal__actionbar');
-        if (modalActionbar) {
-            let withdrawButton = modalActionbar.children[1];
-            if (withdrawButton) {
-                simulateClick(withdrawButton);
-            } else {
-                console.log('Withdraw button not found. Waiting and trying again...');
-                await delay(500); // Extra wait time if the button was not initially found
-                withdrawButton = modalActionbar.children[1];
-                if (withdrawButton) simulateClick(withdrawButton);
-            }
+        // Locate the "Unfollow" button in the modal
+        let unfollowButton = document.querySelector('.artdeco-modal__confirm-dialog-btn[data-test-dialog-primary-btn]');
+        if (unfollowButton) {
+            simulateClick(unfollowButton);
+
+            // Wait for the modal to process and close
+            await delay(500); 
         } else {
-            console.log('Modal action bar not found.');
+            console.log('Unfollow button not found. Waiting and trying again...');
+            await delay(500); // Extra wait time if the button was not initially found
+            unfollowButton = document.querySelector('.artdeco-modal__confirm-dialog-btn[data-test-dialog-primary-btn]');
+            if (unfollowButton) {
+                simulateClick(unfollowButton);
+                await delay(500); // Wait for the modal to process and close
+            }
         }
 
         // Wait a moment before proceeding to the next button
